@@ -70,7 +70,7 @@ export const viewResume = AsyncHandler(async (req, res) => {
     }
     
     // Forward request to the Python FastAPI
-    const pythonApiUrl = process.env.PYTHON_API_URL || 'http://127.0.0.1:8000';
+    const pythonApiUrl = process.env.PYTHON_API_URL || 'https://job-recommender-python.onrender.com';
     const response = await axios.post(`${pythonApiUrl}/view-resume`, { url });
     
     return res.status(200).json({
