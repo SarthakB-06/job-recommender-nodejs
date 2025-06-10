@@ -32,7 +32,20 @@ export const userRegister = AsyncHandler(async (req, res) => {
       password: hashedPassword,
     });
 
-    return res.status(201).json({ message: 'Registration successful', user });
+   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '30d',
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'User registered successfully',
+      token: token, 
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
     console.error('Registration error:', error);
     return res.status(500).json({ message: 'Internal server error' });
